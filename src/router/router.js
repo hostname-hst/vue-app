@@ -19,9 +19,31 @@ export const otherRouter = {
       { path: 'person', meta: {title: '我的'}, name: 'person', component: () => import('@/view/person.vue') },
   ]
 };
-
+export const orderRouter = [
+  {
+    path:'/postOrder',
+    name:'postOrder',
+    meta:'订单需求',
+    component:()=>import('@/view/orders/postOrder.vue')
+  },
+  {
+    path:'/orderBase',
+    name:'orderBase',
+    meta:'订单信息',
+    component:()=>import('@/view/orders/orderBase.vue')
+  },
+  {
+    path:'/houseInfo',
+    name:'houseInfo',
+    meta:'房屋信息',
+    component:()=>import('@/view/orders/houseInfo.vue')
+  },
+]
+  
 
 export const routers = [
   loginRouter,
-  otherRouter
+  ...orderRouter,
+  otherRouter,
+  
 ]
