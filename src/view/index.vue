@@ -46,7 +46,7 @@
         methods:{
             postOrder () {
                 this.$router.push({
-                    name: 'orderBase'
+                    name: 'postOrder'
                 })
             }
         },

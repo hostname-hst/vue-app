@@ -27,5 +27,6 @@ body,html{
   width: 100%;
   padding: 0;
   margin: 0;
+  background-color: #efefef;
 }
 </style>
