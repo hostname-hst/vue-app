@@ -10,11 +10,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lib-flexible": "^0.3.2",
     "mint-ui": "^2.2.13",
     "px2rem-loader": "^0.1.9",
+    "qs": "^6.5.2",
     "scss-loader": "^0.0.1",
     "swiper": "^4.4.1",
     "vue": "^2.5.2",

@@ -1,7 +1,30 @@
 <template>
     <div class="wrap">
-        <router-view></router-view>   
+        <router-view></router-view>  
+        <mt-tabbar v-model="selected">
+            <mt-tab-item id="index">
+                <img slot="icon" src="../assets/logo.png">
+                <img slot="icon" src="../assets/login.png" v-show="indexActive">
+                首页
+            </mt-tab-item>
+            <mt-tab-item id="order">
+                <img slot="icon" src="../assets/logo.png">
+                <img slot="icon" src="../assets/login.png" v-show="orderActive">
+                订单
+            </mt-tab-item>
+            <mt-tab-item id="message">
+                <img slot="icon" src="../assets/logo.png">
+                <img slot="icon" src="../assets/login.png" v-show="messageActive">
+                消息
+            </mt-tab-item>
+            <mt-tab-item id="person">
+                <img slot="icon" src="../assets/logo.png">
+                <img slot="icon" src="../assets/login.png" v-show="personActive">
+                我的
+            </mt-tab-item>
+        </mt-tabbar> 
     </div>
+    
 </template>
 <script>
    import {loginRouter,otherRouter,orderRouter} from '../router/router';

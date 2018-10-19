@@ -26,7 +26,7 @@ exports.cssLoaders = function (options) {
     loader: 'px2rem-loader',
     options: {
           remUnit: 37.5,//设计稿除以10得到的值
-          baseDpr:2,//默认dpr是2，设置成1，才能保证字体正常
+          baseDpr:1,//默认dpr是2，设置成1，才能保证字体正常
         }
     }
 

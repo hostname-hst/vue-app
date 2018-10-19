@@ -39,10 +39,11 @@
             v-model="sheetVisible">
         </mt-actionsheet>
         <div class='image-box'>
-            <text>房产证图</text>
+            <span>房产证图</span>
             <div class='imageList'>
                 <upload-file :multiple="multiple"
                    :max="max"
+                   :imgArr="imgArr"
                    @refDom="getDom"
                    @fileChange="fileChange"></upload-file>
                 <!-- <image bindtap='previewImage' wx:for="{{urls}}" wx:key="{{index}}" src='{{item}}' style='width:158rpx;height:158rpx;margin:0 10rpx 10rpx 0'></image> -->
@@ -54,6 +55,8 @@
 </template>
 <script>
 import uploadFile from '@/components/uploadFile'
+import axios from 'axios'
+import qs from 'qs'
     export default {
         name:'postOrder',
         components:{
@@ -82,6 +85,7 @@ import uploadFile from '@/components/uploadFile'
                         method:this.house
                     }
                 ],
+
                 sheetVisible:false,
             }
         },
@@ -90,8 +94,28 @@ import uploadFile from '@/components/uploadFile'
                 let file = this.$refs.file;
                 this.$emit("refDom", file);
             },
-            fileChange () {
-
+            fileChange (data) {
+                console.log(data)
+                // axios.post('http://192.168.3.33:8082/upload',qs.stringify( {
+                //     file: data
+                // }))
+                // .then(function (response) {
+                //     console.log(response);
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // });
+                axios({
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    url: 'http://192.168.3.33:8082/upload',data,
+                })
+                .then(res=>{
+                    console.log(res)
+                })
+                ;
             },
 
 
