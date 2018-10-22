@@ -1,29 +1,83 @@
 <template>
     <div class="container">
         <div class="formLogin">
-            <input type="number" maxlength="11" placeholder="请输入手机号码">
+            <input type="number" maxlength="11" placeholder="请输入手机号码" v-model="mobile">
             <div class="operate">
-                <input type="number" placeholder="输入验证码">
-                <span class='blue getCode' bindtap='getCode' v-if="isShow">获取验证码</span>
+                <input type="number" placeholder="输入验证码" v-model="msgCode">
+                <span class='blue getCode' @click='getCode' v-if="isShow">获取验证码</span>
                 <span class='blue getCode' v-if="!isShow">重新发送{{rentTime}}</span>
             </div>
-            <mt-button size="large" type="primary">登录</mt-button>
+            <mt-button size="large" type="primary" @click="loginFn">登录</mt-button>
         </div>
         <img src="../assets/login.png" alt="" class="login-bg">
     </div>
 </template>
 <script>
+import axios from 'axios'
     export default {
         name:'login',
         data () {
             return {
-                isShow:true
+                isShow:true,
+                mobile:'',
+                msgCode:''
             }
         },
         methods : {
             getCode () {
-                alert(33)
+                console.log(this.mobile)
+                this.$http.post(`/wx/auth/send_verif_code`,{
+                    mobile:this.mobile,
+                    openId:'wxhst123456'
+                },true)
+                .then(res=>{
+                    console.log(res)
+                })
+            },
+            loginFn () {
+                this.$router.push({
+                    name:'otherRouter'
+                })
+                this.$http.post(`/wx/auth/bind_weixin`,{
+                    mobile:this.mobile,
+                    msgCode:this.msgCode,
+                    openId:'wxhst123456',
+                    name:'hst'
+                })
+                .then(res=>{
+                    if(res.code == 0){
+                        localStorage.setItem('token',res.data.token)
+                        this.$toast(res.errMsg);
+                        this.$router.push({
+                            name:'otherRouter'
+                        })
+                    }
+                })
+                .catch(err=>{
+                    this.$toast(err.errMsg)
+                })
             }
+        },
+        mounted () {
+            // var countdown = 60;
+            // var settime = function (that) {
+            //     if (countdown == 0) {
+            //         this.isShow = true;
+            //         countdown = 60;
+            //         return;
+            //     } else {
+            //         this.isShow = false;
+            //         this.rentTime = countdown;
+            //         countdown--;
+            //     }
+            //     setTimeout(function () {
+            //         settime(that)
+            //     }, 1000)
+            // }
+            // this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa1674b02c914a0f0&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
+            // .then(res=>{
+            //     console.log(res)
+            // })
         }
     }
 </script>

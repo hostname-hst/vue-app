@@ -54,6 +54,8 @@
                     loanPeriod:'',
                     loanUse:'',
                     wxThisCode:'',
+                    loanPeriodType:0,
+                    token:localStorage.getItem('token')
                 },
                 dateType:'年',
                 actionData:[
@@ -80,20 +82,34 @@
         methods:{
             actionSheet (val) {
                 console.log(val)
-                this.sheetVisible = true
+                this.sheetVisible = true;
             },
             year (val) {
                 this.dateType = val.name;
+                this.formData.loanPeriodType = val.value;
             },
             month (val) {
                 this.dateType = val.name;
+                this.formData.loanPeriodType = val.value;
             },
             day (val) {
                 this.dateType = val.name;
+                this.formData.loanPeriodType = val.value;
             },
             nextStep () {
-                this.$router.push({
-                    name:'orderBase'
+                this.$http.post('/wx/uporder/up_order_one',this.formData)
+                .then(res=>{
+                    if(res.code == 0){
+                        localStorage.setItem("wxOId",res.data.wxOId);
+                        this.$toast(res.errMsg)
+                         this.$router.push({
+                            name:'orderBase',
+                        })
+                    }
+                   
+                })
+                .catch(err=>{
+
                 })
             }
         }

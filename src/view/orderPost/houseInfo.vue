@@ -70,7 +70,8 @@ import qs from 'qs'
                     nature:'',
                     houseNum:'',
                     address:'',
-                    acreage:''
+                    acreage:'',
+                    wxOId:localStorage.getItem('wxOId')
                 },
                 natureStr:'',
                 actionData:[
@@ -123,15 +124,25 @@ import qs from 'qs'
                 this.sheetVisible = true;
             },
             bussness (val) {
-                this.natureStr = val.name
+                this.natureStr = val.name;
+                this.formData.nature = val.value;
             },
             house (val) {
-                 this.natureStr = val.name
+                 this.natureStr = val.name;
+                 this.formData.nature = val.value;
             },
             submitBtn () {
-                console.log(this.formData)
-                this.$router.push({
-                    name:'houseInfo'
+                this.$http.post('/wx/uporder/up_order_three',this.formData)
+                .then(res=>{
+                    if(res.code == 0){
+                        this.$toast(res.errMsg)
+                        this.$router.push({
+                            name:'order'
+                        })
+                    }
+                })
+                .catch(err=>{
+                     this.$toast(err.errMsg)
                 })
             }
         }

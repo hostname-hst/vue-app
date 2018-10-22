@@ -47,15 +47,26 @@
                     name:'',
                     idCard:'',
                     workUnit:'',
-                    monthMoney:''
+                    monthMoney:'',
+                    wxOId:localStorage.getItem('wxOId')
                 }
             }
         },
         methods : {
             nextStep () {
-                this.$router.push({
-                    name:'houseInfo'
+                this.$http.post('/wx/uporder/up_order_two',this.formData)
+                .then(res=>{
+                    if(res.code == 0){
+                        this.$toast(res.errMsg)
+                        this.$router.push({
+                            name:'houseInfo'
+                        })
+                    }
                 })
+                .catch(err=>{
+                    this.$toast(err.errMsg)
+                })
+                
             }
         }
     }
