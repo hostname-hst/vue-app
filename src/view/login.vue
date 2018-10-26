@@ -78,11 +78,11 @@ import axios from 'axios'
         },
         mounted () {
             let pageUrl = 'https://miniapp.ronghuiyijie.com/wx/auth/wechat'
-            .replace(/[/]/g, "%2f")
-            .replace(/[:]/g, "%3a")
-            .replace(/[#]/g, "%23")
-            .replace(/[&]/g, "%26")
-            .replace(/[=]/g, "%3d");
+            // .replace(/[/]/g, "%2f")
+            // .replace(/[:]/g, "%3a")
+            // .replace(/[#]/g, "%23")
+            // .replace(/[&]/g, "%26")
+            // .replace(/[=]/g, "%3d");
             // this.$http.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxa1674b02c914a0f0&secret=b54ae4204d40b8f2c6d283c9d100a4f9')
             this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
             .then(res=>{
