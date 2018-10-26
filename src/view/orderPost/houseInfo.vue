@@ -41,13 +41,14 @@
         <div class='image-box'>
             <span>房产证图</span>
             <div class='imageList'>
-                <upload-file :multiple="multiple"
+                <!-- <image bindtap='previewImage' wx:for="{{urls}}" wx:key="{{index}}" src='{{item}}' style='width:158rpx;height:158rpx;margin:0 10rpx 10rpx 0'></image> -->
+                <div class='image-add'>+
+                    <upload-file :multiple="multiple"
                    :max="max"
-                   :imgArr="imgArr"
                    @refDom="getDom"
                    @fileChange="fileChange"></upload-file>
-                <!-- <image bindtap='previewImage' wx:for="{{urls}}" wx:key="{{index}}" src='{{item}}' style='width:158rpx;height:158rpx;margin:0 10rpx 10rpx 0'></image> -->
-                <div class='image-add'>+</div>
+                </div>
+                <img :src="item" alt="" v-for="item in imgArr" :key="item">
             </div>  
         </div>
         <mt-button type="primary" size="large" class="step" @click="submitBtn">提交</mt-button>
@@ -71,9 +72,12 @@ import qs from 'qs'
                     houseNum:'',
                     address:'',
                     acreage:'',
+                    imgList:[],
                     wxOId:localStorage.getItem('wxOId')
                 },
+                imgArr:[],
                 natureStr:'',
+                
                 actionData:[
                     {
                         name:'商业',
@@ -96,16 +100,6 @@ import qs from 'qs'
                 this.$emit("refDom", file);
             },
             fileChange (data) {
-                console.log(data)
-                // axios.post('http://192.168.3.33:8082/upload',qs.stringify( {
-                //     file: data
-                // }))
-                // .then(function (response) {
-                //     console.log(response);
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // });
                 axios({
                     method: 'post',
                     headers: {
@@ -114,9 +108,9 @@ import qs from 'qs'
                     url: 'http://192.168.3.33:8082/upload',data,
                 })
                 .then(res=>{
-                    console.log(res)
+                    this.imgArr = this.imgArr.concat(res.data.data.url);
+                    this.formData.imgList = this.formData.imgArr.concat(res.data.data.objId);
                 })
-                ;
             },
 
 
@@ -200,6 +194,39 @@ import qs from 'qs'
                 width: 100%;
                 height: 100%;
                 line-height: 48px;
+            }
+        }
+    }
+    .image-box{
+        padding: 0 10px;
+        img{
+            width:79px;
+            height:79px;
+            margin:0 5px 5px 0;
+        }
+        .image-add{
+            position: relative;
+            width: 79px;
+            height: 79px;
+            margin-right: 9px;
+            margin-bottom: 9px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 79px;
+            font-size: 30px;
+            color: #ccc;
+        }
+        span{
+            text-align: left;
+            display: block;
+            font-size: 16px;
+            padding: 5px 5px 10px;
+        }
+        .imageList{
+            overflow: hidden;
+            div,img{
+                float: left;
+                margin: 5px;
             }
         }
     }

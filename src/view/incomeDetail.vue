@@ -49,7 +49,20 @@ export default {
                     orderId:val
                 }
             })
+        },
+        getIncomeList () {
+            this.$http.get('/wx/order/order_fee')
+            .then(res=>{
+                this.dataList = res.data.list;
+                this.totalFee = res.data.totalFee;
+            })
+            .catch(err=>{
+                this.$toast(err.errMsg)
+            })
         }
+    },
+    mounted () {
+        this.getIncomeList();
     }
 }
 </script>

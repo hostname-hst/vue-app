@@ -30,7 +30,19 @@ export default {
             this.$router.push({
                 name:'editPerson'
             })
+        },
+        getInfo () {
+            this.$http.get('/wx/order/order_fee')
+            .then(res=>{
+                this.rhWxAccount = res.data.rhWxAccount;
+            })
+            .catch(err=>{
+                this.$toast(err.errMsg)
+            })
         }
+    },
+    mounted () {
+        this.getInfo();
     }
 }
 </script>

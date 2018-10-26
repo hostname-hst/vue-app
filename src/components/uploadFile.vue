@@ -5,7 +5,7 @@
            class="file-input"
            accept="image/*"
            :multiple="multiple"
-           @change="change"/>
+           @change="change" style="opacity:0"/>
 
    </div>
 </template>
@@ -21,7 +21,7 @@
         props: {
             multiple: Boolean,
             max: Number,
-            imgArr:Array
+            // imgArr:Array
         },
         data() {
             return {};
@@ -52,9 +52,20 @@
                 let files = e.target.files;
                 // 如果超过设定的张数张，提示
                 var formData = new FormData();
-                formData.append('file',files[0],files[0].name)
-                this.$emit("fileChange", formData);
+                for(var i=0;i<files.length;i++){
+                    formData.append('file',files[i],files[i].name)
+                    this.$emit("fileChange", formData);
+                }
             },
         }
     };
 </script>
+<style>
+    .file-input{
+        width: 79px;
+        height: 79px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+</style>

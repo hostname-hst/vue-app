@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <!-- <keep-alive> -->
+        <router-view></router-view>
+    <!-- </keep-alive> -->
   </div>
 </template>
 
@@ -15,7 +16,8 @@ export default {
 body,html{
   margin: 0;
   height: 100%;
-  width: 100%
+  width: 100%;
+  background-color: #efefef;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

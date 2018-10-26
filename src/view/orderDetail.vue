@@ -6,65 +6,157 @@
             <span class='result'>{{model.statusStr}}</span>
             <div class='concatType'>
                 <span>受理人：{{model.name}}</span>
-                <a href="model.mobile" bindtap='callPhone'>{{model.mobile}}</a>
+                <a :href="model.mobile" bindtap='callPhone'>{{model.mobile}}</a>
             </div>
             </div>
         </div>
-        <div class='title-h3' @click="loanSche">订单详情 </div>
-        <div class="order-step">
-            <div slot="title" class='title' @click='handleClick' data-step="0">
-                基本信息
-                <time class="time">2018-10-18 17:30</time>
+        <div class='title-h3'>订单详情 </div>
+        <div class="order-step" v-if="orderList[0].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(0)' :data-step="0">
+                 {{orderList[0].step}}
+                <time class="time">{{orderList[1].date}}</time>
             </div>
-            <div slot="content" class="content" v-if="false">
+            <div slot="content" class="content" v-if="orderList[0].open">
                 <ul>
-                <li>  
-                    <span>借 款 人:</span></li>
-                <li>
-                    <span>身份证号:</span></li>
-                <li>
-                    <span>工作单位：</span></li>
-                <li>
-                    <span>月 收 入:</span>万元</li>   
+                    <li>  
+                        <span>借 款 人:</span>{{orderList[0].orderObj.name}}</li>
+                    <li>
+                        <span>身份证号:</span>{{orderList[0].orderObj.idCard}}</li>
+                    <li>
+                        <span>工作单位：</span>{{orderList[0].orderObj.workUnit}}</li>
+                    <li>
+                        <span>月 收 入:</span>{{orderList[0].orderObj.monthMoney}}万元</li>   
                 </ul>
             </div>
         </div>
-        <div class="order-step">
-            <div slot="title" class='title' @click='handleClick' data-step="0">
-                借款需求
-                <time class="time">2018-10-18 17:30</time>
+        <div class="order-step" v-if="orderList[1].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(1)' :data-step="1">
+                 {{orderList[1].step}}
+                <time class="time">{{orderList[1].date}}</time>
             </div>
-            <div slot="content" class="content" v-if="false">
+            <div slot="content" class="content" v-if="orderList[1].open">
                 <ul>
-                <li>  
-                    <span>借 款 人:</span></li>
-                <li>
-                    <span>身份证号:</span></li>
-                <li>
-                    <span>工作单位：</span></li>
-                <li>
-                    <span>月 收 入:</span>万元</li>   
+                    <li>  
+                        <span>借款金额:</span>{{orderList[1].orderObj.money}}万元</li>
+                    <li>
+                        <span>借款期限:</span>{{orderList[1].orderObj.loanPeriod}}{{orderList[1].orderObj.loanPeriodTypeStr}}</li>
+                    <li>
+                        <span>借款用途：</span>{{orderList[1].orderObj.loanUse}}</li>
                 </ul>
             </div>
         </div>
-          <div class="order-step">
-            <div slot="title" class='title' @click='handleClick' data-step="0">
-                初评信息
-                <time class="time">2018-10-18 17:30</time>
+        <div class="order-step" v-if="orderList[2].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(2)' data-step="2">
+                {{orderList[2].step}}
+                <time class="time">{{orderList[2].date}}</time>
             </div>
-            <div slot="content" class="content" v-if="false">
+            <div slot="content" class="content" v-if="orderList[2].open">
                 <ul>
-                <li>  
-                    <span>借 款 人:</span></li>
-                <li>
-                    <span>身份证号:</span></li>
-                <li>
-                    <span>工作单位：</span></li>
-                <li>
-                    <span>月 收 入:</span>万元</li>   
+                    <li>  
+                        <span>初评结果:</span>{{orderList[2].orderObj.initResult}}</li>
+                    <li>
+                        <span>初评金额:</span>{{orderList[2].orderObj.initMoney}}</li>
                 </ul>
             </div>
         </div>
+         <div class="order-step" v-if="orderList[3].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(3)' data-step="3">
+                {{orderList[3].step}}
+                <time class="time">{{orderList[3].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[3].open">
+                <ul>
+                    <li>  
+                        <span>初评结果:</span>{{orderList[3].orderObj.initResult}}</li>
+                    <li>
+                        <span>备注:</span>{{orderList[3].orderObj.initMoney}}</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[4].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(4)' data-step="4">
+                {{orderList[4].step}}
+                <time class="time">{{orderList[4].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[4].open">
+                <ul>
+                    <li @click="loanSche(orderList[4].orderObj.id)">  
+                        <span>贷款方案:</span>点击查看</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[5].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(5)' data-step="5">
+                {{orderList[5].step}}
+                <time class="time">{{orderList[5].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[5].open">
+                <ul>
+                    <li>  
+                        <span>审批金额:</span>{{orderList[5].orderObj.realMoney}}万元</li>
+                    <li>  
+                        <span>授信期限:</span>{{orderList[5].orderObj.creditPeriod}}{{
+                        orderList[5].orderObj.creditPeriodTypeStr}}</li>
+                    <li>  
+                        <span>贷款期限:</span>{{orderList[5].orderObj.loanPeriod}}{{orderList[5].orderObj.loanPeriodTypeStr}}</li>
+                    <li>  
+                        <span>利率:</span>{{orderList[5].orderObj.rateOfInterest}}%{{orderList[5].orderObj.rateOfInteTypeStr}}</li>
+                    <li>  
+                        <span>贷款方式:</span>{{orderList[5].orderObj.modeOfRepayStr}}</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[0].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(6)' data-step="6">
+                {{orderList[6].step}}
+                <time class="time">{{orderList[6].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[6].open">
+                <ul>
+                    <li>  
+                        <span>放款时间:</span>{{orderList[6].orderObj.repayTime}}</li>
+                    <li>  
+                        <span>放款金额:</span>{{orderList[6].orderObj.realMoney}}万元</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[7].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(7)' data-step="7">
+                {{orderList[7].step}}
+                <time class="time">{{orderList[7].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[7].open">
+                <ul>
+                    <li>  
+                        <span>备注:</span>{{orderList[7].orderObj.remark}}</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[8].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(8)' data-step="8">
+                {{orderList[8].step}}
+                <time class="time">{{orderList[8].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[8].open">
+                <ul>
+                    <li>  
+                        <span>备注:</span>{{orderList[8].orderObj.remark}}</li>
+                </ul>
+            </div>
+        </div>
+         <div class="order-step" v-if="orderList[9].orderObj!=''">
+            <div slot="title" class='title' @click='handleClick(9)' data-step="9">
+                {{orderList[9].step}}
+                <time class="time">{{orderList[9].date}}</time>
+            </div>
+            <div slot="content" class="content" v-if="orderList[9].open">
+                <ul>
+                    <li>  
+                        <span>备注:</span>{{orderList[9].orderObj.remark}}</li>
+                </ul>
+            </div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -73,18 +165,43 @@ export default {
     data () {
         return {
             model:{},
-            orderList:[]
+            orderList:[],
+            orderId:''
         }
     },
     methods:{
-        handleClick () {
-
+        handleClick (val) {
+            let list = this.orderList;
+            for (var i in list){
+                if (i == val){
+                    console.log(list[i].open)
+                    list[i].open = !list[i].open;
+                }else{
+                    list.open = false;
+                }
+            }
         },
-        loanSche () {
+        loanSche (val) {
             this.$router.push({
-                name:'loanSche'
+                name:'loanSche',
+                query:{
+                    orderId:val
+                }
+            })
+        },
+        getList () {
+            this.$http.get(`/wx/order/order_detail?id=${this.$route.query.orderId}`)
+            .then(res=>{
+                this.model = res.data.model;
+                this.orderList = res.data.list;
+            })
+            .catch(err=>{
+                this.$toast(err.errMsg)
             })
         }
+    },
+    mounted () {
+        this.getList();
     }
 }
 </script>
@@ -109,8 +226,12 @@ export default {
         padding: 0 15px;
         display: flex;
         justify-content: space-between;
-        margin-top: 57px;
+        margin-top: 45px;
         font-size: 16px;
+    }
+    .concatType a{
+        color: #fff;text-decoration: none;
+        margin-top: 2px;
     }
     .result{
         font-size: 30px;

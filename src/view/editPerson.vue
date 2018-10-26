@@ -25,15 +25,55 @@
                 mobileInput:'',
                 msgCodeInput:'',
                 isShow:true,
-                rentTime:''
+                rentTime:'',
+                countdown:60
             }
         },
         methods :{
             bindMobile () {
-
+                let formData = {
+                    name:this.nameInput,
+                    mobile:this.mobileInput,
+                    msgCode:this.msgCodeInput,
+                    openId:'wxhst123456'
+                }
+                this.$http.post('/wx/auth/bind_weixin',formData)
+                .then(res=>{
+                    console.log(res)
+                    if(res.code == 0){
+                        this.$router.push({
+                            name:'index'
+                        })
+                    }
+                })
+                .catch(err=>{
+                    this.$toast(err.errMsg)
+                })
+            },
+            setTime () {
+                var that = this;
+                if (this.countdown == 0) {
+                    this.isShow = true;
+                    this.countdown = 60;
+                    return;
+                } else {
+                    this.isShow = false;
+                    this.rentTime = this.countdown;
+                    this.countdown--;
+                }
+                var that = this;
+                setTimeout(function () {
+                    that.setTime()
+                }, 1000)
             },
             getCode () {
-
+                this.$http.post(`/wx/auth/send_verif_code`,{
+                    mobile:this.mobileInput,
+                    openId:'wxhst123456'
+                },true)
+                .then(res=>{
+                    this.setTime();
+                })
             }
         }
 

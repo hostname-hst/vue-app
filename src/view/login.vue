@@ -20,19 +20,37 @@ import axios from 'axios'
             return {
                 isShow:true,
                 mobile:'',
-                msgCode:''
+                msgCode:'',
+                countdown:60,
+                rentTime:60,
+                token:''
             }
         },
         methods : {
             getCode () {
-                console.log(this.mobile)
-                this.$http.post(`/wx/auth/send_verif_code`,{
+                this.$http.posst(`/wx/auth/send_verif_code`,{
                     mobile:this.mobile,
                     openId:'wxhst123456'
                 },true)
                 .then(res=>{
-                    console.log(res)
+                    this.setTime(this)
                 })
+            },
+            setTime () {
+                var that = this;
+                if (this.countdown == 0) {
+                    this.isShow = true;
+                    this.countdown = 60;
+                    return;
+                } else {
+                    this.isShow = false;
+                    this.rentTime = this.countdown;
+                    this.countdown--;
+                }
+                var that = this;
+                setTimeout(function () {
+                    that.setTime()
+                }, 1000)
             },
             loginFn () {
                 this.$router.push({
@@ -59,25 +77,21 @@ import axios from 'axios'
             }
         },
         mounted () {
-            // var countdown = 60;
-            // var settime = function (that) {
-            //     if (countdown == 0) {
-            //         this.isShow = true;
-            //         countdown = 60;
-            //         return;
-            //     } else {
-            //         this.isShow = false;
-            //         this.rentTime = countdown;
-            //         countdown--;
-            //     }
-            //     setTimeout(function () {
-            //         settime(that)
-            //     }, 1000)
-            // }
-            // this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa1674b02c914a0f0&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
-            // .then(res=>{
-            //     console.log(res)
-            // })
+            let pageUrl = 'https://miniapp.ronghuiyijie.com/wx/auth/wechat'
+            .replace(/[/]/g, "%2f")
+            .replace(/[:]/g, "%3a")
+            .replace(/[#]/g, "%23")
+            .replace(/[&]/g, "%26")
+            .replace(/[=]/g, "%3d");
+            // this.$http.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxa1674b02c914a0f0&secret=b54ae4204d40b8f2c6d283c9d100a4f9')
+            this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
+            .then(res=>{
+                console.log(res);
+                this.token = res.data.access_token;
+            })
+            .catch(err=>{
+                this.$toast(err.errMsg)
+            })
         }
     }
 </script>

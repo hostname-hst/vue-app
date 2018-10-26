@@ -3,7 +3,7 @@
         <div>
             <div class='person-wrap' @click='gotoPersonInfo'>
                 <div class="img">
-                    <!-- <open-data type="userAvatarUrl" class="image"></open-data> -->
+                    <img src="" alt="">
                 </div>
                 <span>{{formData.uname}}</span>
                 <a :herf="formData.mobile">{{formData.mobile}}</a>
@@ -43,7 +43,20 @@ export default {
             this.$router.push({
                 name:'incomeDetail'
             })
+        },
+        getInfo () {
+            this.$http.get('/wx/order/order_fee')
+            .then(res=>{
+                this.formData = res.data.rhWxAccount;
+                this.totalFee = res.data.totalFee;
+            })
+            .catch(err=>{
+
+            })
         }
+    },
+    mounted () {
+        this.getInfo();
     }
 }
 </script>
@@ -57,23 +70,23 @@ export default {
         flex-direction: column;
     }
     .person-wrap .img{
-    display: flex;
-    width: 80px;
-    height: 80px;
-    
-    margin: 35px auto 7.5px;
+        display: flex;
+        width: 80px;
+        height: 80px;
+        margin: 35px auto 7.5px;
     }
-    .person-wrap .img .image{
+    .person-wrap .img img{
         width: 80px;
         height: 80px; 
         display:block; 
         overflow:hidden; 
         border-radius: 50%;
     }
-    .person-wrap text,.person-wrap a{
-    text-align: center;
-    margin-bottom: 5px;
-    color: #fff;
+    .person-wrap span,.person-wrap a{
+        text-align: center;
+        margin-bottom: 5px;
+        color: #fff;
+        font-size: 14px;
     }
     .icon{
         width: 15px;

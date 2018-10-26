@@ -1,25 +1,25 @@
 <template>
     <div class="wrap">
         <router-view></router-view>  
-        <mt-tabbar v-model="selected">
+        <mt-tabbar v-model="selected" fixed>
             <mt-tab-item id="index">
-                <img slot="icon" src="../assets/logo.png">
-                <img slot="icon" src="../assets/login.png" v-show="indexActive">
+                <img slot="icon" src="../assets/image/home.png" v-show="!indexActive">
+                <img slot="icon" src="../assets/image/homeSe.png" v-show="indexActive">
                 首页
             </mt-tab-item>
             <mt-tab-item id="order">
-                <img slot="icon" src="../assets/logo.png">
-                <img slot="icon" src="../assets/login.png" v-show="orderActive">
+                <img slot="icon" src="../assets/image/order.png" v-show="!orderActive">
+                <img slot="icon" src="../assets/image/orderSe.png" v-show="orderActive">
                 订单
             </mt-tab-item>
             <mt-tab-item id="message">
-                <img slot="icon" src="../assets/logo.png">
-                <img slot="icon" src="../assets/login.png" v-show="messageActive">
+                <img slot="icon" src="../assets/image/message.png" v-show="!messageActive">
+                <img slot="icon" src="../assets/image/messageSe.png" v-show="messageActive">
                 消息
             </mt-tab-item>
             <mt-tab-item id="person">
-                <img slot="icon" src="../assets/logo.png">
-                <img slot="icon" src="../assets/login.png" v-show="personActive">
+                <img slot="icon" src="../assets/image/person.png" v-show="!personActive">
+                <img slot="icon" src="../assets/image/personSe.png" v-show="personActive">
                 我的
             </mt-tab-item>
         </mt-tabbar> 
@@ -40,17 +40,19 @@
                 personActive:false,
             }
         },
-        // methods () {
-
-        // },
         mounted () {
-            console.log(this)
+            if(sessionStorage.getItem('isSelect')!='null'){
+                 this.selected = sessionStorage.getItem('isSelect')
+            }else{
+                sessionStorage.setItem('isSelect', 'index')
+            }
         },
         watch :{
             selected : function(val,oldVal){
                 this.$router.push({
                     name: val
                 })
+                sessionStorage.setItem('isSelect', val) 
                 switch (val) {
                     case 'index':
                         this.indexActive = true;
