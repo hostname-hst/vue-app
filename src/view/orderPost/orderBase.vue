@@ -20,7 +20,7 @@
                 <span>房屋信息</span>
             </div>
         </div>
-        <form class='form'>
+        <form class='form-box'>
             <div class='border'>
                 <mt-field label="借款人姓名" placeholder="请输入借款人姓名" v-model="formData.name"></mt-field>
             </div>
@@ -71,7 +71,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .steps{
         display: flex;
         padding: 20px 20px;
@@ -101,7 +101,7 @@
             }
         }
     }
-    .form{
+    .form-box{
         display: block;
         padding-top:30px;
         .border{

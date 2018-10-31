@@ -13,7 +13,7 @@
                 <div class='blue getCode' v-if="!isShow">重新发送{{rentTime}}</div>
             </div>
         </form> 
-        <mt-button class='step' @click='bindMobile' size="large" type="primary">绑定</mt-button>
+        <mt-button class='step' @click='bindMobile' size="large" type="primary">确定</mt-button>
     </div> 
 </template>
 <script>
@@ -35,9 +35,9 @@
                     name:this.nameInput,
                     mobile:this.mobileInput,
                     msgCode:this.msgCodeInput,
-                    openId:'wxhst123456'
+                    loginCode:localStorage.getItem('token')
                 }
-                this.$http.post('/wx/auth/bind_weixin',formData)
+                this.$http.post('/wx/auth/editUser',formData)
                 .then(res=>{
                     console.log(res)
                     if(res.code == 0){

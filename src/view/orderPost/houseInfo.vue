@@ -20,7 +20,7 @@
                 <span>房屋信息</span>
             </div>
         </div>
-        <form class='form'>
+        <form class='form-box'>
             <div class='border' @click="houseType">
                 <mt-field label="房屋性质" placeholder="请选择房屋性质" v-model="natureStr"></mt-field>
             </div>
@@ -105,11 +105,11 @@ import qs from 'qs'
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
-                    url: 'http://192.168.3.33:8082/upload',data,
+                    url: 'http://39.106.146.106:8082/upload',data,
                 })
                 .then(res=>{
                     this.imgArr = this.imgArr.concat(res.data.data.url);
-                    this.formData.imgList = this.formData.imgArr.concat(res.data.data.objId);
+                    this.formData.imgList = this.formData.imgList.concat(res.data.data.objId);
                 })
             },
 
@@ -142,7 +142,7 @@ import qs from 'qs'
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .steps{
         display: flex;
         padding: 20px 20px;
@@ -172,7 +172,7 @@ import qs from 'qs'
             }
         }
     }
-    .form{
+    .form-box{
         display: block;
         padding-top:30px;
         .border{

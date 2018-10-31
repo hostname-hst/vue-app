@@ -10,12 +10,12 @@
         <div class='title'>返费明细：</div>
         <div>
             <div class='money-list' v-for="item in dataList" :key="item.index">
-            <div class='order' @click='orderDetail(item.orderId)'>
-                <span style='display:inline-block;width:240px;text-align:left; margin-right:30px;'>{{item.type}}</span>
-                <span>{{item.name}}</span>
-                <span class='detail'>查看详情</span>
-            </div>
-            <span class='detail-money'>￥{{item.money}}元</span>
+                <div class='order' @click='orderDetail(item.id)'>
+                    <span style='display:inline-block;width:200px;text-align:left; margin-right:30px;'>{{item.wxOId}}</span>
+                    <span>{{item.name}}</span>
+                    <span class='detail-btn'>查看详情</span>
+                </div>
+                <span class='detail-money'>￥{{item.money}}元</span>
             </div>
         </div>
     </div>
@@ -29,13 +29,13 @@ export default {
             dataList:[
                 {
                     type:'jsdsadas',
-                    name:'张三',
+                    name:'张三怎么回事',
                     money:123456
                 },
                 {
                     type:'jsdsadas',
                     name:'张三',
-                    money:123456
+                    money:56
                 }
             ]
             
@@ -74,7 +74,7 @@ export default {
         flex-direction: column;
         position: relative;
     }
-    .person-wrap image{
+    .person-wrap img{
         width: 100%;
         height: 100%;
     }
@@ -91,7 +91,7 @@ export default {
     .money{
         font-size: 30px;
     }
-    .detail{
+    .detail-btn{
         display: block;
         color: #878787;
         font-size: 13px;

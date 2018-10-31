@@ -28,7 +28,7 @@ import axios from 'axios'
         },
         methods : {
             getCode () {
-                this.$http.posst(`/wx/auth/send_verif_code`,{
+                this.$http.post(`/wx/auth/send_verif_code`,{
                     mobile:this.mobile,
                     openId:'wxhst123456'
                 },true)
@@ -52,19 +52,37 @@ import axios from 'axios'
                     that.setTime()
                 }, 1000)
             },
-            loginFn () {
-                this.$router.push({
-                    name:'otherRouter'
+            checkLogin (code) {
+                this.$http.post('/wx/auth/check_login',{code:code}
+                )
+                .then(res=>{
+                    console.log(res)
+                    if(res.code == 0){
+                        localStorage.setItem('token',res.data);
+                        this.$router.push({
+                            name:'otherRouter'
+                        })
+                    }
+                    
                 })
-                this.$http.post(`/wx/auth/bind_weixin`,{
+                .catch(err=>{
+                    console.log(err)
+                })
+            },
+            loginFn () {
+                // this.$router.push({
+                //     name:'otherRouter'
+                // })
+                // debugger
+                this.$http.post(`/wx/auth/register`,{
                     mobile:this.mobile,
                     msgCode:this.msgCode,
-                    openId:'wxhst123456',
-                    name:'hst'
+                    name:'渠道用户'
                 })
                 .then(res=>{
                     if(res.code == 0){
-                        localStorage.setItem('token',res.data.token)
+                        localStorage.setItem('token',res.data.token);
+                        // this.checkLogin(res.data.token);
                         this.$toast(res.errMsg);
                         this.$router.push({
                             name:'otherRouter'
@@ -72,26 +90,30 @@ import axios from 'axios'
                     }
                 })
                 .catch(err=>{
-                    this.$toast(err.errMsg)
+                    this.$toast(err.errMsg);
+                    localStorage.setItem('token','')
                 })
             }
         },
         mounted () {
-            let pageUrl = 'https://miniapp.ronghuiyijie.com/wx/auth/wechat'
+            // let token = localStorage.getItem('token');
+            // if(!token){
+            //     this.$router.push({
+            //         name:'login'
+            //     })
+            // }else{
+            //     this.$router.push({
+            //         name:'index'
+            //     })
+            // }
+            // let pageUrl = 'http://miniapp.ronghuiyijie.com/wx/auth/wechat/index.html'
             // .replace(/[/]/g, "%2f")
             // .replace(/[:]/g, "%3a")
             // .replace(/[#]/g, "%23")
             // .replace(/[&]/g, "%26")
             // .replace(/[=]/g, "%3d");
+            // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
             // this.$http.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxa1674b02c914a0f0&secret=b54ae4204d40b8f2c6d283c9d100a4f9')
-            this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
-            .then(res=>{
-                console.log(res);
-                this.token = res.data.access_token;
-            })
-            .catch(err=>{
-                this.$toast(err.errMsg)
-            })
         }
     }
 </script>

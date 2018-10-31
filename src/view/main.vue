@@ -40,15 +40,39 @@
                 personActive:false,
             }
         },
+        methods:{
+            checkLogin () {
+                // debugger
+                this.$http.post('/wx/auth/check_login',{code:localStorage.getItem('token')}
+                )
+                .then(res=>{
+                    if(res.code != 0){
+                       localStorage.setItem('token','')
+                        this.$router.push({
+                            name:'login'
+                        })
+                    }
+                })
+                .catch(err=>{
+                    this.$toast(err.errMsg)
+                    localStorage.setItem('token','')
+                    this.$router.push({
+                        name:'login'
+                    })
+                })
+            },
+        },
         mounted () {
             if(sessionStorage.getItem('isSelect')!='null'){
                  this.selected = sessionStorage.getItem('isSelect')
             }else{
                 sessionStorage.setItem('isSelect', 'index')
             }
+            
         },
         watch :{
             selected : function(val,oldVal){
+                this.checkLogin();
                 this.$router.push({
                     name: val
                 })

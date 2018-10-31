@@ -48,9 +48,30 @@
                 this.$router.push({
                     name: 'postOrder'
                 })
-            }
+            },
+            checkLogin () {
+                // debugger
+                this.$http.post('/wx/auth/check_login',{code:localStorage.getItem('token')}
+                )
+                .then(res=>{
+                    if(res.code != 0){
+                       localStorage.setItem('token','')
+                        this.$router.push({
+                            name:'login'
+                        })
+                    }
+                })
+                .catch(err=>{
+                    this.$toast(err.errMsg)
+                    localStorage.setItem('token','')
+                    this.$router.push({
+                        name:'login'
+                    })
+                })
+            },
         },
         mounted () {
+            this.checkLogin();
             var mySwiper =new Swiper('.swiper-container',{
                 effect : 'coverflow',
                 slidesPerView: 2,
@@ -64,21 +85,25 @@
                     slideShadows : false
                 },
             });
-            let pageUrl = window.location.href
-            .replace(/[/]/g, "%2f")
-            .replace(/[:]/g, "%3a")
-            .replace(/[#]/g, "%23")
-            .replace(/[&]/g, "%26")
-            .replace(/[=]/g, "%3d");
-            // this.$http.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxa1674b02c914a0f0&secret=b54ae4204d40b8f2c6d283c9d100a4f9')
-            this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect')
-            .then(res=>{
-                console.log(res);
-                this.token = res.data.access_token;
-            })
-            .catch(err=>{
-                this.$toast(err.errMsg)
-            })
+            // let pageUrl = window.location.href
+            // .replace(/[/]/g, "%2f")
+            // .replace(/[:]/g, "%3a")
+            // .replace(/[#]/g, "%23")
+            // .replace(/[&]/g, "%26")
+            // .replace(/[=]/g, "%3d");
+            // this.$http.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+pageUrl+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect')
+            // .then(res=>{
+            //     debugger
+            //     console.log(res);
+            //     // this.token = res.data.access_token;
+            // })
+            // .catch(err=>{
+            //     debugger
+            //     this.$toast(err.errMsg)
+            // })
+            // var fromurl=window.location.href;
+            // var url='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx51f5a8028daa68fe&redirect_uri='+encodeURIComponent(fromurl)+'&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';  
+            // location.href = url; 
         }
     }
 </script>

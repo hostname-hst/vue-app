@@ -2,16 +2,16 @@
      <div> 
         <form class='form'>
             <div>
-                头像 <img :src='userInfo.avatarUrl' style='border-radius:50%;'>
+                头像 <img src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg' style='border-radius:50%;'>
             </div>
             <div>
-                姓名<span>{{rhWxAccount.uname}}</span>
+                姓名<input type='text' v-model='userInfo.uname'>
             </div>
             <div>
-                手机号码<input type='tel' disabled='disabled' :value='rhWxAccount.mobile'>
+                手机号码<input type='tel' disabled='disabled' :value='userInfo.mobile'>
             </div>
         </form> 
-        <mt-button class="step" size="large" type="primary" @click="changeMobile">换邦手机号</mt-button>
+        <mt-button class="step" size="large" type="primary" @click="changeMobile">保存</mt-button>
     </div> 
 </template>
 <script>
@@ -20,21 +20,31 @@ export default {
     data () {
         return {
             userInfo:{
-                avatarUrl:'../assets/image/logo.png'
+                
             },
-            rhWxAccount:{}
+            // rhWxAccount:{}
         }
     },
     methods:{
         changeMobile () {
-            this.$router.push({
-                name:'editPerson'
+            // this.$router.push({
+            //     name:'editPerson'
+            // })
+            this.$http.post('/wx/auth/editUser',this.userInfo)
+            .then(res=>{
+                if(res.code == 0){
+                    this.$toast(res.errMsg)
+                }
+            })
+            .catch(err=>{
+                this.$toast(err.errMsg)
             })
         },
         getInfo () {
-            this.$http.get('/wx/order/order_fee')
+            this.$http.get('/wx/auth/getUser')
             .then(res=>{
-                this.rhWxAccount = res.data.rhWxAccount;
+                this.userInfo = res.data;
+                // this.rhWxAccount = res.data.rhWxAccount;
             })
             .catch(err=>{
                 this.$toast(err.errMsg)

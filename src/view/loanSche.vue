@@ -1,7 +1,7 @@
 <template>
     <div class="loanWrap">
         <h3 style="margin-bottom:25px;font-weight:500;line-height:90px;">
-            订单编号：Nssdsdds;
+            订单编号：{{this.$route.query.orderNum}}
             <time>日期：{{scheInfo.updateTime}}</time>   
         </h3>
         <div class="box">
@@ -92,7 +92,7 @@
             text-align: left;
             margin: 0;
             background: #fff;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 16px;
             color: #666;
             border-bottom: 0.5px solid #ccc;
@@ -120,7 +120,7 @@
         }
         h4{
             padding: 0 10px;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
             color:#666;
             text-align: left;

@@ -8,19 +8,37 @@ import qs from 'qs';
 //     location.protocol+'//ronghuiyijie.com/api' :
 //     'https://debug.url.com';
 const ajaxUrl = process.env.API_ROOT
-// alert(ajaxUrl)
-console.log(ajaxUrl)
-var instance = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000,
-    headers:{
-        token: localStorage.getItem('token')
-    }
+// var instance = axios.create({
+//     headers:{'token': localStorage.getItem("token")},
+//     baseURL: ajaxUrl,
+//     timeout: 30000,
     // withCredentials:true,
     //headers: {'content-type': 'application/x-www-form-urlencoded'},
     // headers: {'content-type': 'application/json'}
-});
+// });
+
 const get = (url, query, loading = true) => {
+
+    if(localStorage.getItem("token")){
+        var instance = axios.create({
+            headers:{'token': localStorage.getItem("token")},
+            baseURL: ajaxUrl,
+            timeout: 30000,
+            // withCredentials:true,
+            //headers: {'content-type': 'application/x-www-form-urlencoded'},
+            // headers: {'content-type': 'application/json'}
+        });
+    }else{
+        var instance = axios.create({
+            baseURL: ajaxUrl,
+            timeout: 30000,
+            // withCredentials:true,
+            //headers: {'content-type': 'application/x-www-form-urlencoded'},
+            // headers: {'content-type': 'application/json'}
+        });
+    }
+
+
     let queryAry = [];
     for (let key in query) {
         queryAry.push(key + '=' + query[key]);
@@ -32,6 +50,7 @@ const get = (url, query, loading = true) => {
         url = url + '&' + queryAry.join('&');
     }
     return new Promise((resolve, reject) => {
+        axios.defaults.headers.token = localStorage.getItem('token');
         if (loading) {
             Mint.Indicator.open({
                 text: '数据加载中...',
@@ -94,6 +113,30 @@ const get = (url, query, loading = true) => {
 }
 
 const post = (url, body, headerJson, params, loading = true) => {
+
+
+    if(localStorage.getItem("token")){
+        var instance = axios.create({
+            headers:{'token': localStorage.getItem("token")},
+            baseURL: ajaxUrl,
+            timeout: 30000,
+            // withCredentials:true,
+            //headers: {'content-type': 'application/x-www-form-urlencoded'},
+            // headers: {'content-type': 'application/json'}
+        });
+    }else{
+        var instance = axios.create({
+            baseURL: ajaxUrl,
+            timeout: 30000,
+            // withCredentials:true,
+            //headers: {'content-type': 'application/x-www-form-urlencoded'},
+            // headers: {'content-type': 'application/json'}
+        });
+    }
+
+
+    
+
     return new Promise((resolve, reject) => {
         // if (loading) {
         //     Mint.Indicator.open({
@@ -102,8 +145,10 @@ const post = (url, body, headerJson, params, loading = true) => {
         // }
         if(headerJson){
             axios.defaults.headers.post['Content-Type'] = 'application/json';
+            axios.defaults.headers.token = localStorage.getItem('token');
         }else{
             axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            axios.defaults.headers.token = localStorage.getItem('token');
         }
         return instance.post(url, body, headerJson, qs.stringify(params))
             .then((res) => {

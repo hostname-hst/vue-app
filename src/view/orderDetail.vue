@@ -6,7 +6,7 @@
             <span class='result'>{{model.statusStr}}</span>
             <div class='concatType'>
                 <span>受理人：{{model.name}}</span>
-                <a :href="model.mobile" bindtap='callPhone'>{{model.mobile}}</a>
+                <a :href="'tel:'+model.mobile">{{model.mobile}}</a>
             </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     <li>
                         <span>工作单位：</span>{{orderList[0].orderObj.workUnit}}</li>
                     <li>
-                        <span>月 收 入:</span>{{orderList[0].orderObj.monthMoney}}万元</li>   
+                        <span>月 收 入:</span>{{orderList[0].orderObj.monthMoney}}元</li>   
                 </ul>
             </div>
         </div>
@@ -55,7 +55,7 @@
                     <li>  
                         <span>初评结果:</span>{{orderList[2].orderObj.initResult}}</li>
                     <li>
-                        <span>初评金额:</span>{{orderList[2].orderObj.initMoney}}</li>
+                        <span>初评金额:</span>{{orderList[2].orderObj.initMoney}}万元</li>
                 </ul>
             </div>
         </div>
@@ -80,7 +80,7 @@
             </div>
             <div slot="content" class="content" v-if="orderList[4].open">
                 <ul>
-                    <li @click="loanSche(orderList[4].orderObj.id)">  
+                    <li @click="loanSche(orderList[4].orderObj.id,orderList[4].orderObj.idStr)">  
                         <span>贷款方案:</span>点击查看</li>
                 </ul>
             </div>
@@ -100,13 +100,13 @@
                     <li>  
                         <span>贷款期限:</span>{{orderList[5].orderObj.loanPeriod}}{{orderList[5].orderObj.loanPeriodTypeStr}}</li>
                     <li>  
-                        <span>利率:</span>{{orderList[5].orderObj.rateOfInterest}}%{{orderList[5].orderObj.rateOfInteTypeStr}}</li>
+                        <span>利率:</span>{{orderList[5].orderObj.rateOfInterest}}{{orderList[5].orderObj.rateOfInteTypeStr}}</li>
                     <li>  
-                        <span>贷款方式:</span>{{orderList[5].orderObj.modeOfRepayStr}}</li>
+                        <span>还款方式:</span>{{orderList[5].orderObj.modeOfRepayStr}}</li>
                 </ul>
             </div>
         </div>
-         <div class="order-step" v-if="orderList[0].orderObj!=''">
+         <div class="order-step" v-if="orderList[6].orderObj!=''">
             <div slot="title" class='title' @click='handleClick(6)' data-step="6">
                 {{orderList[6].step}}
                 <time class="time">{{orderList[6].date}}</time>
@@ -114,7 +114,7 @@
             <div slot="content" class="content" v-if="orderList[6].open">
                 <ul>
                     <li>  
-                        <span>放款时间:</span>{{orderList[6].orderObj.repayTime}}</li>
+                        <span>放款时间:</span>{{orderList[6].orderObj.realTime}}</li>
                     <li>  
                         <span>放款金额:</span>{{orderList[6].orderObj.realMoney}}万元</li>
                 </ul>
@@ -128,7 +128,7 @@
             <div slot="content" class="content" v-if="orderList[7].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[7].orderObj.remark}}</li>
+                        <span>备注:</span>{{orderList[7].orderObj.remark[0].label}}</li>
                 </ul>
             </div>
         </div>
@@ -140,7 +140,7 @@
             <div slot="content" class="content" v-if="orderList[8].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[8].orderObj.remark}}</li>
+                        <span>备注:</span>{{orderList[8].orderObj.remark[0].label}}</li>
                 </ul>
             </div>
         </div>
@@ -152,7 +152,7 @@
             <div slot="content" class="content" v-if="orderList[9].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[9].orderObj.remark}}</li>
+                        <span>备注:</span>{{orderList[9].orderObj.remark[0].label}}</li>
                 </ul>
             </div>
         </div>
@@ -181,11 +181,12 @@ export default {
                 }
             }
         },
-        loanSche (val) {
+        loanSche (val,orderNum) {
             this.$router.push({
                 name:'loanSche',
                 query:{
-                    orderId:val
+                    orderId:val,
+                    orderNum:orderNum
                 }
             })
         },
@@ -280,7 +281,7 @@ export default {
     }
     .content ul li span{
         display: inline-block;
-        width: 60px;
+        width: 80px;
     }
     .icon{
         float: right;

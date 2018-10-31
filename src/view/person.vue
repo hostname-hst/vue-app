@@ -3,25 +3,26 @@
         <div>
             <div class='person-wrap' @click='gotoPersonInfo'>
                 <div class="img">
-                    <img src="" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg" alt="">
                 </div>
                 <span>{{formData.uname}}</span>
-                <a :herf="formData.mobile">{{formData.mobile}}</a>
+                <a>{{formData.mobile}}</a>
             </div>
             <div class='person-list'>
                 <div class='info' @click='incomeList'>
                     <img src='../assets/image/money.png' class='icon'>
                     <span style='margin-left:5px;'>返费</span>   
-                    <img src='../assets/image/right.png' class='icon' style='float:right; margin-left:5px; margin-top:32px;'>
+                    <img src='../assets/image/right.png' class='icon' style='float:right; margin-left:5px; margin-top:16px;'>
                     <span class='money'>￥{{totalFee}}</span>
                 </div>
-                <div class='info'>
+                <!-- <div class='info'>
                     <img src='../assets/image/info.png' class='icon'>
                     <span style='margin-left:5px;'>关于我们</span>   
-                    <img src='../assets/image/right.png' class='icon' style='float:right; margin-left:10rpx; margin-top:32px;'>
-                </div>
+                    <img src='../assets/image/right.png' class='icon' style='float:right; margin-left:10px; margin-top:16px;'>
+                </div> -->
             </div>
         </div>
+        <mt-button class='step' @click='loginOut' size="large" type="primary">退出</mt-button>
     </div>
 </template>
 <script>
@@ -52,6 +53,12 @@ export default {
             })
             .catch(err=>{
 
+            })
+        },
+        loginOut () {
+            localStorage.clear();
+            this.$router.push({
+                name:'login'
             })
         }
     },
@@ -105,5 +112,9 @@ export default {
         background-color: #fff;
         line-height: 45px;
         border-bottom: 0.5px solid #ccc;
+    }
+    .step{
+        width: 96%;
+        margin: 50px auto;
     }
 </style>

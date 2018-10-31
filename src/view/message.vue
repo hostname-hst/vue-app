@@ -66,6 +66,9 @@ export default {
             this.getList();
         }
     },
+    mounted () {
+        this.getList();
+    },
     watch:{
         select (val) {
             console.log(val)

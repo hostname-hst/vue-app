@@ -20,12 +20,12 @@
                 <span>房屋信息</span>
             </div>
         </div>
-        <form class='form'>
+        <form class='form-box'>
             <div class='border'>
-                <mt-field label="借款金额" placeholder="请输入借款金额（万元）" v-model="formData.money"></mt-field>
+                <mt-field label="借款金额" placeholder="请输入借款金额（万元）" type="number" v-model="formData.money"></mt-field>
             </div>
             <div class='border'>
-                <mt-field label="借款期限" placeholder="请输入借款期限" v-model="formData.loanPeriod"></mt-field>
+                <mt-field label="借款期限" placeholder="请输入借款期限" type="number" v-model="formData.loanPeriod"></mt-field>
                  <p class='timeType' @click='actionSheet'>
                     <span>{{dateType}}</span>
                 </p>
@@ -34,7 +34,7 @@
                 <mt-field label="借款用途" placeholder="请输入借款用途" v-model="formData.loanUse"></mt-field>
             </div>
             <div class='border'>
-                <mt-field label="申报代码" placeholder="业务经理手机号后6位" v-model="formData.wxThisCode"></mt-field>
+                <mt-field label="申报代码" type="number" placeholder="业务经理手机号后6位" v-model="formData.wxThisCode"></mt-field>
             </div>
         </form>
          <mt-actionsheet
@@ -115,7 +115,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .steps{
         display: flex;
         padding: 20px 20px;
@@ -145,7 +145,7 @@
             }
         }
     }
-    .form{
+    .form-box{
         display: block;
         padding-top:30px;
         .border{
