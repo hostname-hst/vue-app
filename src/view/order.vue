@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header">
-            <mt-search :value.sync="value" cancel-text="取消"  placeholder="搜索"> </mt-search>
+            <mt-search :value.sync="value" cancel-text="取消"  placeholder="搜索" @keyup.native.enter="search(value)"> </mt-search>
             <mt-navbar class="page-part" v-model="selected" fixed @click="changeStatus">
                 <mt-tab-item id="-1">全部</mt-tab-item>
                 <mt-tab-item id="21">审核中</mt-tab-item>
@@ -75,6 +75,10 @@ export default {
                     orderId:val
                 }
             })
+        },
+        search (val) {
+            this.formData.query = val;
+            this.getList();
         },
         changeStatus () {
             console.log(this.selected)

@@ -22,7 +22,7 @@
                 </div> -->
             </div>
         </div>
-        <mt-button class='step' @click='loginOut' size="large" type="primary">退出</mt-button>
+        <mt-button class='step-btn' @click='loginOut' size="large" type="primary">退出</mt-button>
     </div>
 </template>
 <script>
@@ -57,6 +57,7 @@ export default {
         },
         loginOut () {
             localStorage.clear();
+            sessionStorage.clear();
             this.$router.push({
                 name:'login'
             })
@@ -113,8 +114,13 @@ export default {
         line-height: 45px;
         border-bottom: 0.5px solid #ccc;
     }
-    .step{
-        width: 96%;
+    .step-btn{
+        position: fixed;
+        left: 0;
+        bottom: 40px;
+        width: 100%;
         margin: 50px auto;
+        color: red;
+        background-color: #fff!important;
     }
 </style>

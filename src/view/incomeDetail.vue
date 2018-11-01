@@ -11,7 +11,7 @@
         <div>
             <div class='money-list' v-for="item in dataList" :key="item.index">
                 <div class='order' @click='orderDetail(item.id)'>
-                    <span style='display:inline-block;width:200px;text-align:left; margin-right:30px;'>{{item.wxOId}}</span>
+                    <span style='display:inline-block;width:100px;text-align:left; margin-right:30px;'>{{item.wxOId}}</span>
                     <span>{{item.name}}</span>
                     <span class='detail-btn'>查看详情</span>
                 </div>

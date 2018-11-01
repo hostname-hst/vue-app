@@ -37,7 +37,7 @@
             <div slot="content" class="content" v-if="orderList[1].open">
                 <ul>
                     <li>  
-                        <span>借款金额:</span>{{orderList[1].orderObj.money}}万元</li>
+                        <span>借款金额:</span>{{orderList[1].orderObj.initMoney}}万元</li>
                     <li>
                         <span>借款期限:</span>{{orderList[1].orderObj.loanPeriod}}{{orderList[1].orderObj.loanPeriodTypeStr}}</li>
                     <li>
@@ -55,7 +55,7 @@
                     <li>  
                         <span>初评结果:</span>{{orderList[2].orderObj.initResult}}</li>
                     <li>
-                        <span>初评金额:</span>{{orderList[2].orderObj.initMoney}}万元</li>
+                        <span>初评金额:</span>{{orderList[2].orderObj.money}}万元</li>
                 </ul>
             </div>
         </div>
@@ -93,7 +93,7 @@
             <div slot="content" class="content" v-if="orderList[5].open">
                 <ul>
                     <li>  
-                        <span>审批金额:</span>{{orderList[5].orderObj.realMoney}}万元</li>
+                        <span>审批金额:</span>{{orderList[5].orderObj.money}}万元</li>
                     <li>  
                         <span>授信期限:</span>{{orderList[5].orderObj.creditPeriod}}{{
                         orderList[5].orderObj.creditPeriodTypeStr}}</li>
@@ -128,7 +128,7 @@
             <div slot="content" class="content" v-if="orderList[7].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[7].orderObj.remark[0].label}}</li>
+                        <span>备注:</span>{{JSON.parse(orderList[7].orderObj.remark)[0].label}}</li>
                 </ul>
             </div>
         </div>
@@ -140,7 +140,7 @@
             <div slot="content" class="content" v-if="orderList[8].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[8].orderObj.remark[0].label}}</li>
+                        <span>备注:</span>{{JSON.parse(orderList[8].orderObj.remark)[0].label}}</li>
                 </ul>
             </div>
         </div>
@@ -152,7 +152,7 @@
             <div slot="content" class="content" v-if="orderList[9].open">
                 <ul>
                     <li>  
-                        <span>备注:</span>{{orderList[9].orderObj.remark[0].label}}</li>
+                        <span>备注:</span>{{JSON.parse(orderList[9].orderObj.remark)[0].label}}</li>
                 </ul>
             </div>
         </div>
